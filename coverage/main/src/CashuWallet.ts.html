@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">76.7% </span>
+                <span class="strong">77.16% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>191/249</span>
+                <span class='fraction'>196/254</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">71.49% </span>
+                <span class="strong">71.3% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>158/221</span>
+                <span class='fraction'>159/223</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">63.04% </span>
+                <span class="strong">64.58% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>29/46</span>
+                <span class='fraction'>31/48</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.46% </span>
+                <span class="strong">77.88% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>165/213</span>
+                <span class='fraction'>169/217</span>
             </div>
         
             
@@ -57,7 +57,7 @@
         <template id="filterTemplate">
             <div class="quiet">
                 Filter:
-                <input oninput="onInput()" type="search" id="fileSearch">
+                <input type="search" id="fileSearch">
             </div>
         </template>
     </div>
@@ -791,7 +791,15 @@
 <a name='L726'></a><a href='#L726'>726</a>
 <a name='L727'></a><a href='#L727'>727</a>
 <a name='L728'></a><a href='#L728'>728</a>
-<a name='L729'></a><a href='#L729'>729</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
+<a name='L729'></a><a href='#L729'>729</a>
+<a name='L730'></a><a href='#L730'>730</a>
+<a name='L731'></a><a href='#L731'>731</a>
+<a name='L732'></a><a href='#L732'>732</a>
+<a name='L733'></a><a href='#L733'>733</a>
+<a name='L734'></a><a href='#L734'>734</a>
+<a name='L735'></a><a href='#L735'>735</a>
+<a name='L736'></a><a href='#L736'>736</a>
+<a name='L737'></a><a href='#L737'>737</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -1393,6 +1401,14 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1520,8 +1536,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { bytesToHex, randomBytes } from '@noble/hashes/utils';
-import { CashuMint } from './CashuMint.js';
-import { BlindedMessage } from './model/BlindedMessage.js';
+import { CashuMint } from './CashuMint';
+import { BlindedMessage } from './model/BlindedMessage';
 import {
 	type AmountPreference,
 	type BlindedMessageData,
@@ -1542,13 +1558,13 @@ import {
 	CheckStateEnum,
 	SerializedBlindedSignature,
 	MeltQuoteState
-} from './model/types/index.js';
+} from './model/types/index';
 import {
 	bytesToNumber,
 	getDecodedToken,
 	getDefaultAmountPreference,
 	splitAmount
-} from './utils.js';
+} from './utils';
 import { validateMnemonic } from '@scure/bip39';
 import { wordlist } from '@scure/bip39/wordlists/english';
 import { hashToCurve, pointFromHex } from '@cashu/crypto/modules/common';
@@ -1664,8 +1680,8 @@ class CashuWallet {
 				privkey: options?.privkey
 			});
 			return proofs;
-		} catch (error) {
-			throw new Error('Error when receiving');
+		} catch (error: any) {
+			throw new Error('Error when receiving: ' + error.message);
 		}
 	}
 &nbsp;
@@ -1713,8 +1729,8 @@ class CashuWallet {
 				keys
 			);
 			proofs.push(...newProofs);
-		} catch (error) {
-			throw new Error('Error receiving token entry');
+		} catch (error: any) {
+			throw new Error('Error receiving token entry: ' + error.message);
 		}
 		return proofs;
 	}
@@ -1836,7 +1852,7 @@ class CashuWallet {
 	/**
 	 * Initialize the wallet with the mints public keys
 	 */
-	private async getKeys(keysetId?: string, unit?: string): Promise&lt;MintKeys&gt; {
+	async getKeys(keysetId?: string, unit?: string): Promise&lt;MintKeys&gt; {
 		if (<span class="missing-if-branch" title="if path not taken" >I</span>!this._keys || (<span class="branch-1 cbranch-no" title="branch not covered" >keysetId !== undefined </span>&amp;&amp; <span class="branch-2 cbranch-no" title="branch not covered" >this._keys.id !== keysetId)</span>) {
 			const allKeys = await this.mint.getKeys(keysetId);
 			let keys;
@@ -2107,7 +2123,7 @@ class CashuWallet {
 	 * @param proofs (only the 'Y' field is required)
 	 * @returns
 	 */
-	async checkProofsSpent&lt;T extends { secret: string }&gt;(proofs: Array&lt;T&gt;): Promise&lt;Array&lt;T&gt;&gt; {
+	async checkProofsSpent&lt;T extends { secret: string }&gt;(proofs: Array&lt;T&gt;): Promise&lt;{spent: Array&lt;T&gt;, pending: Array&lt;T&gt;}&gt; {
 		const enc = new TextEncoder();
 		const Ys = proofs.map((p) =&gt; hashToCurve(enc.encode(p.secret)).toHex(true));
 		const payload = {
@@ -2116,11 +2132,19 @@ class CashuWallet {
 		};
 		const { states } = await this.mint.check(payload);
 &nbsp;
-		return proofs.filter((_, i) =&gt; {
+		const spent = proofs.filter((_, i) =&gt; {
 			const state = states.find((state) =&gt; state.Y === Ys[i]);
 			return state &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >state.state === CheckStateEnum.SPENT;</span>
 		});
+&nbsp;
+		const pending = proofs.filter((_, i) =&gt; {
+			const state = states.find((state) =&gt; state.Y === Ys[i]);
+			return state &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >state.state === CheckStateEnum.PENDING;</span>
+		});
+&nbsp;
+		return {spent, pending}
 	}
+	
 	private splitReceive(
 		amount: number,
 		amountAvailable: number
@@ -2254,7 +2278,7 @@ export { CashuWallet };
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-07-19T14:09:23.743Z
+                at 2024-07-19T14:10:52.145Z
             </div>
         <script src="../prettify.js"></script>
         <script>
